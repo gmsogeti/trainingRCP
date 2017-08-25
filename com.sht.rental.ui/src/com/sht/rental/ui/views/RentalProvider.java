@@ -7,14 +7,17 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 import com.opcoach.training.rental.Customer;
 import com.opcoach.training.rental.Rental;
 import com.opcoach.training.rental.RentalAgency;
 import com.opcoach.training.rental.RentalObject;
+import com.sht.rental.ui.RentalConstants;
+import com.sht.rental.ui.RentalUIActivator;
 
-public class RentalProvider extends LabelProvider implements ITreeContentProvider, IColorProvider {
+public class RentalProvider extends LabelProvider implements ITreeContentProvider, IColorProvider, RentalConstants {
 
 	@Override
 	public Object[] getElements(Object inputElement) {
@@ -58,6 +61,18 @@ public class RentalProvider extends LabelProvider implements ITreeContentProvide
 		if (element instanceof Customer) return ((Customer) element).getDisplayName();
 		if (element instanceof RentalObject) return ((RentalObject) element).getName();
 		return super.getText(element);
+	}
+	
+	@Override
+	public Image getImage(Object element) {
+		Image img = super.getImage(element);
+		String key = "";
+		if (element instanceof Customer) key = IMG_CUSTOMERS;
+		else if (element instanceof Rental) key = IMG_RENTALS;
+		else if (element instanceof RentalObject) key = IMG_OBJECT;
+		else if (element instanceof RentalAgency) key = IMG_AGENCIES;
+		img = RentalUIActivator.getDefault().getImageRegistry().get(key);
+		return img;
 	}
 	
 	private class Node {

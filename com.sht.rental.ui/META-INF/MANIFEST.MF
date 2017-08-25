@@ -6,7 +6,8 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.sht.rental.ui.RentalUIActivator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- com.sht.rental.core;bundle-version="1.0.0"
+ com.sht.rental.core;bundle-version="1.0.0",
+ com.sht.rental.help;bundle-version="1.0.0";resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: com.sht.rental.ui

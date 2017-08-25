@@ -32,6 +32,8 @@ public class AgencyView extends ViewPart implements IViewPart {
 		treeViewer.setInput(agencies);
 		
 		treeViewer.expandAll();
+		
+		getSite().setSelectionProvider(treeViewer);
 	}
 
 	@Override

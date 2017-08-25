@@ -6,7 +6,9 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 
 import com.opcoach.training.rental.Customer;
+import com.opcoach.training.rental.Rental;
 import com.opcoach.training.rental.RentalAgency;
+import com.opcoach.training.rental.RentalObject;
 
 public class RentalProvider extends LabelProvider implements ITreeContentProvider {
 
@@ -18,11 +20,18 @@ public class RentalProvider extends LabelProvider implements ITreeContentProvide
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
+		Object[] childrens = null;
 		if (parentElement instanceof RentalAgency) {
-			Object[] childrens = ((RentalAgency) parentElement).getCustomers().toArray();
-			return childrens;
+			childrens = new Node[] {
+					new Node(Node.CUSTOMERS, (RentalAgency) parentElement),
+					new Node(Node.RENTALS, (RentalAgency) parentElement),
+					new Node(Node.RENTAL_OBJECTS, (RentalAgency) parentElement)
+			};
 		}
-		return null;
+		else if (parentElement instanceof Node) {
+			childrens = ((Node) parentElement).getChildren();
+		}
+		return childrens;
 	}
 
 	@Override
@@ -33,17 +42,45 @@ public class RentalProvider extends LabelProvider implements ITreeContentProvide
 
 	@Override
 	public boolean hasChildren(Object element) {
-		if (element instanceof RentalAgency) {
+		/*if (element instanceof RentalAgency) {
 			return ! ((RentalAgency) element).getCustomers().isEmpty();
-		}
-		return false;
+		}*/
+		return true;
 	}
 	
 	@Override
 	public String getText(Object element) {
 		if (element instanceof RentalAgency) return ((RentalAgency) element).getName();
 		if (element instanceof Customer) return ((Customer) element).getDisplayName();
+		if (element instanceof RentalObject) return ((RentalObject) element).getName();
 		return super.getText(element);
+	}
+	
+	private class Node {
+		static final String CUSTOMERS = "Clients";
+		static final String RENTALS = "Locations";
+		static final String RENTAL_OBJECTS = "Objets à louer";
+		
+		String label;
+		RentalAgency agency;
+		
+		public Node(String label, RentalAgency agency) {
+			super();
+			this.label = label;
+			this.agency = agency;
+		}
+		
+		public Object[] getChildren() {
+			if (label == Node.CUSTOMERS) return agency.getCustomers().toArray();
+			if (label == Node.RENTAL_OBJECTS) return agency.getObjectsToRent().toArray();
+			if (label == Node.RENTALS) return agency.getRentals().toArray();
+			return null;
+		}
+		
+		@Override
+		public String toString() {
+			return label;
+		}
 	}
 
 }

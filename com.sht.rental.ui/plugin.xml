@@ -9,6 +9,12 @@
             name="Rental Property View"
             restorable="true">
       </view>
+      <view
+            class="com.sht.rental.ui.views.AgencyView"
+            id="com.sht.rental.ui.views.AgencyView"
+            name="AgencyView"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: RentalAdapters
+Bundle-SymbolicName: com.sht.rental.adapters;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.sht.rental.adapters.RentalAdaptersActivator
+Require-Bundle: org.eclipse.core.runtime,
+ com.sht.rental.core;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy

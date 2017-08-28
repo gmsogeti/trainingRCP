@@ -47,5 +47,49 @@
             name="Colors">
       </page>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            id="com.sht.rental.ui.getinfo"
+            name="Get Informations">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="com.sht.rental.ui.GetInformationsHandler"
+            commandId="com.sht.rental.ui.getinfo">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               label="test">
+            <command
+                  commandId="com.sht.rental.ui.getinfo"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:com.sht.rental.ui.views.AgencyView?after=additions">
+         <command
+               commandId="com.sht.rental.ui.getinfo"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.views.ResourceNavigator?after=additions">
+         <command
+               commandId="com.sht.rental.ui.getinfo"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>

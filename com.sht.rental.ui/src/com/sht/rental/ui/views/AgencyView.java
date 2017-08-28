@@ -1,6 +1,7 @@
 package com.sht.rental.ui.views;
 
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.PartInitException;
@@ -14,6 +15,7 @@ import org.eclipse.swt.widgets.Tree;
 
 import java.util.ArrayList;
 
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -37,6 +39,11 @@ public class AgencyView extends ViewPart implements IViewPart, IPropertyChangeLi
 		treeViewer.setContentProvider(provider);
 		treeViewer.setLabelProvider(provider);
 		treeViewer.setInput(agencies);
+		
+		MenuManager menuManager = new MenuManager();
+		Menu menu = menuManager.createContextMenu(treeViewer.getControl());
+		treeViewer.getControl().setMenu(menu);
+		getSite().registerContextMenu(menuManager, treeViewer);
 		
 		treeViewer.expandAll();
 		

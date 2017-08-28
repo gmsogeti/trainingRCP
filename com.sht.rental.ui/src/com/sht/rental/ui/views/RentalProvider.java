@@ -2,6 +2,9 @@ package com.sht.rental.ui.views;
 
 import java.util.Collection;
 
+import org.eclipse.jface.resource.ColorRegistry;
+import org.eclipse.jface.resource.JFaceResources;
+import org.eclipse.jface.resource.StringConverter;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -97,18 +100,62 @@ public class RentalProvider extends LabelProvider implements ITreeContentProvide
 		}
 		
 		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result + ((agency == null) ? 0 : agency.hashCode());
+			result = prime * result + ((label == null) ? 0 : label.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Node other = (Node) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (agency == null) {
+				if (other.agency != null)
+					return false;
+			} else if (!agency.equals(other.agency))
+				return false;
+			if (label == null) {
+				if (other.label != null)
+					return false;
+			} else if (!label.equals(other.label))
+				return false;
+			return true;
+		}
+
+		@Override
 		public String toString() {
 			return label;
+		}
+
+		private RentalProvider getOuterType() {
+			return RentalProvider.this;
 		}
 	}
 
 	@Override
 	public Color getForeground(Object element) {
 		//if (element instanceof RentalAgency) return ((RentalAgency) element).getName();
-		if (element instanceof Customer) return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_CYAN);
-		if (element instanceof RentalObject) return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_MAGENTA);
-		if (element instanceof Rental) return Display.getCurrent().getSystemColor(SWT.COLOR_DARK_RED);
-		return null;
+		Color colElement = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
+		String key = null;
+		if (element instanceof Customer) key = PREF_COLOR_CUSTOMER;
+		if (element instanceof RentalObject) key = PREF_COLOR_OBJECT;
+		if (element instanceof Rental) key = PREF_COLOR_RENTAL;
+		
+		if (key != null)
+			colElement = getAColor(RentalUIActivator.getDefault().getPreferenceStore().getString(key));
+		
+		return colElement;
 	}
 
 	@Override
@@ -117,4 +164,14 @@ public class RentalProvider extends LabelProvider implements ITreeContentProvide
 		return null;
 	}
 
+	private Color getAColor(String rgbKey) {
+		ColorRegistry colorRegistry = JFaceResources.getColorRegistry();
+		
+		Color col = colorRegistry.get(rgbKey);
+		if (col == null) {
+			colorRegistry.put(rgbKey, StringConverter.asRGB(rgbKey));
+			col = colorRegistry.get(rgbKey);
+		}
+		return col;
+	}
 }

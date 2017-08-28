@@ -8,7 +8,7 @@
             class="com.sht.rental.ui.views.RentalPropertyView"
             icon="icons/Rentals.png"
             id="com.sht.rental.ui.RentalPropertyView"
-            name="Rental Property View"
+            name="%view.name"
             restorable="true">
       </view>
       <view
@@ -16,13 +16,19 @@
             class="com.sht.rental.ui.views.AgencyView"
             icon="icons/Agency.png"
             id="com.sht.rental.ui.views.AgencyView"
-            name="AgencyView"
+            name="%view.name.0"
             restorable="true">
       </view>
       <category
             id="com.sht.rental.ui.category"
-            name="Rental">
+            name="%category.name">
       </category>
+      <view
+            class="com.sht.rental.ui.views.CustomerPropertyView"
+            id="com.sht.rental.ui.CustomerPropertyrView"
+            name="Customer Properties"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
@@ -30,7 +36,7 @@
             class="com.sht.rental.ui.RentalPerspective"
             icon="icons/Agency.png"
             id="com.sht.rental.ui.perspective1"
-            name="Rental">
+            name="%perspective.name">
       </perspective>
    </extension>
    <extension
@@ -44,14 +50,14 @@
       <page
             class="com.sht.rental.ui.RentalColorsPreference"
             id="com.sht.rental.ui.RentalColorsPreference"
-            name="Colors">
+            name="%page.name">
       </page>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
       <command
             id="com.sht.rental.ui.getinfo"
-            name="Get Informations">
+            name="%command.name">
       </command>
    </extension>
    <extension
@@ -67,7 +73,7 @@
             allPopups="false"
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               label="test">
+               label="%menu.label">
             <command
                   commandId="com.sht.rental.ui.getinfo"
                   style="push">

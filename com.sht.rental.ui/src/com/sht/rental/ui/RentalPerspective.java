@@ -16,7 +16,7 @@ public class RentalPerspective implements IPerspectiveFactory {
 		
 		layout.addView("com.sht.rental.ui.views.AgencyView", IPageLayout.LEFT, 0.5f, IPageLayout.ID_EDITOR_AREA);
 		layout.addView("com.sht.rental.ui.RentalPropertyView", IPageLayout.RIGHT, 0.5f, "com.sht.rental.ui.views.AgencyView");
-		layout.addView("com.sht.rental.ui.CustomerPropertyView", IPageLayout.BOTTOM, 0.5f, "com.sht.rental.ui.RentalPropertyView");
+		layout.addView("com.sht.rental.ui.CustomerPropertyrView", IPageLayout.BOTTOM, 0.5f, "com.sht.rental.ui.RentalPropertyView");
 		}
 
 

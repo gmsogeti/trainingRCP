@@ -17,6 +17,7 @@ import com.opcoach.training.rental.Customer;
 import com.opcoach.training.rental.Rental;
 import com.opcoach.training.rental.RentalAgency;
 import com.opcoach.training.rental.RentalObject;
+import com.sht.rental.ui.Palette;
 import com.sht.rental.ui.RentalConstants;
 import com.sht.rental.ui.RentalUIActivator;
 
@@ -145,22 +146,21 @@ public class RentalProvider extends LabelProvider implements ITreeContentProvide
 
 	@Override
 	public Color getForeground(Object element) {
-		//if (element instanceof RentalAgency) return ((RentalAgency) element).getName();
-		Color colElement = Display.getCurrent().getSystemColor(SWT.COLOR_BLACK);
-		String key = null;
-		if (element instanceof Customer) key = PREF_COLOR_CUSTOMER;
-		if (element instanceof RentalObject) key = PREF_COLOR_OBJECT;
-		if (element instanceof Rental) key = PREF_COLOR_RENTAL;
+		//if (element instanceof RentalAgency) return ((RentalAgency) elemen께께께께께께t).getName();
+		String palId = RentalUIActivator.getDefault().getPreferenceStore().getString(PREF_PALETTE);
 		
-		if (key != null)
-			colElement = getAColor(RentalUIActivator.getDefault().getPreferenceStore().getString(key));
-		
-		return colElement;
+		Palette p = RentalUIActivator.getDefault().getPaletteManager().get(palId);
+		if (p != null) return p.getColorProvider().getForeground(element);
+		return null;
 	}
 
 	@Override
 	public Color getBackground(Object element) {
-		// TODO Auto-generated method stub
+		//if (element instanceof RentalAgency) return ((RentalAgency) elemen께께께께께께t).getName();
+		String palId = RentalUIActivator.getDefault().getPreferenceStore().getString(PREF_PALETTE);
+		
+		Palette p = RentalUIActivator.getDefault().getPaletteManager().get(palId);
+		if (p != null) return p.getColorProvider().getBackground(element);
 		return null;
 	}
 

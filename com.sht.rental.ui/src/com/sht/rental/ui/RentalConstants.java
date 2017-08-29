@@ -10,5 +10,6 @@ public interface RentalConstants {
 	public static final String PREF_COLOR_RENTAL = "PREF_COLOR_RENTAL";
 	public static final String PREF_COLOR_OBJECT = "PREF_COLOR_OBJECT";
 
+	public static final String PREF_PALETTE = "PREF_PALETTE";
 
 }

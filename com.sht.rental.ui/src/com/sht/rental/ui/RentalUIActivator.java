@@ -28,7 +28,7 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalConstan
 	// The shared instance
 	private static RentalUIActivator plugin;
 	
-	private static Map<String, IColorProvider> paletteManager = new HashMap<>();
+	private Map<String, Palette> paletteManager = new HashMap<>();
 	
 	/**
 	 * The constructor
@@ -60,9 +60,12 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalConstan
 		IExtensionRegistry reg = Platform.getExtensionRegistry();
 		for (IConfigurationElement e : reg.getConfigurationElementsFor("com.sht.rental.ui.palette")) {
 			if (e.getName().equals("palette")) {
-				IColorProvider palette = null;
+				Palette palette = new Palette();;
 				try {
-					palette = (IColorProvider) e.createExecutableExtension("paletteClass");
+					IColorProvider p = (IColorProvider) e.createExecutableExtension("paletteClass");
+					palette.setId(e.getAttribute("id"));
+					palette.setName(e.getAttribute("name"));
+					palette.setColorProvider(p);
 					paletteManager.put(e.getAttribute("id"), palette);
 					getLog().log(new Status(IStatus.INFO, e.getNamespaceIdentifier(), "Palette "+e.getAttribute("paletteClass")+" has been created"));
 				} catch (CoreException e1) {
@@ -70,6 +73,14 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalConstan
 				}
 			}
 		}
+	}
+
+	public Map<String, Palette> getPaletteManager() {
+		return paletteManager;
+	}
+
+	public void setPaletteManager(Map<String, Palette> paletteManager) {
+		this.paletteManager = paletteManager;
 	}
 
 	/*

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="palette" name="palette" schema="schema/palette.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <view
@@ -96,6 +97,19 @@
                style="push">
          </command>
       </menuContribution>
+   </extension>
+   <extension
+         point="com.sht.rental.ui.palette">
+      <palette
+            id="com.sht.rental.ui.defaultPalette"
+            name="com.sht.rental.ui.defaultPalette"
+            paletteClass="com.sht.rental.ui.DefaultPalette">
+      </palette>
+      <palette
+            id="com.sht.rental.ui.redPalette"
+            name="com.sht.rental.ui.redPalette"
+            paletteClass="com.sht.rental.ui.RedPalette">
+      </palette>
    </extension>
 
 </plugin>

@@ -1,10 +1,17 @@
 package com.sht.rental.ui;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -21,6 +28,8 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalConstan
 	// The shared instance
 	private static RentalUIActivator plugin;
 	
+	private static Map<String, IColorProvider> paletteManager = new HashMap<>();
+	
 	/**
 	 * The constructor
 	 */
@@ -35,6 +44,7 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalConstan
 		super.start(context);
 		plugin = this;
 		readViewExtensions();
+		readPalettes();
 	}
 
 	private void readViewExtensions() {
@@ -42,6 +52,22 @@ public class RentalUIActivator extends AbstractUIPlugin implements RentalConstan
 		for (IConfigurationElement e : reg.getConfigurationElementsFor("org.eclipse.ui.views")) {
 			if (e.getName().equals("view")) {
 				System.out.println("\tPlugin: " + e.getNamespaceIdentifier() + "\tView : "+e.getAttribute("name"));
+			}
+		}
+	}
+
+	private void readPalettes() {
+		IExtensionRegistry reg = Platform.getExtensionRegistry();
+		for (IConfigurationElement e : reg.getConfigurationElementsFor("com.sht.rental.ui.palette")) {
+			if (e.getName().equals("palette")) {
+				IColorProvider palette = null;
+				try {
+					palette = (IColorProvider) e.createExecutableExtension("paletteClass");
+					paletteManager.put(e.getAttribute("id"), palette);
+					getLog().log(new Status(IStatus.INFO, e.getNamespaceIdentifier(), "Palette "+e.getAttribute("paletteClass")+" has been created"));
+				} catch (CoreException e1) {
+					getLog().log(new Status(IStatus.ERROR, e.getNamespaceIdentifier(), "Unable to create extenstion", e1));
+				}
 			}
 		}
 	}
